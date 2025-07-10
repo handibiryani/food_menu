@@ -188,21 +188,67 @@ body::before {
       margin-top: 30px;
     }
     .menu-item {
-      background: #2a2a2a;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s ease;
-    }
-    .menu-item img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .menu-item:hover img {
-      transform: scale(1.05);
-    }
+  position: relative;
+  background: #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+/* Create black overlay only around the image edges */
+.menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 180px; /* same as image height */
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
+  z-index: 2;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+   .menu-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+   .image-wrapper {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
+  z-index: 2;
+}
+
+/* Zoom effect on hover */
+.menu-item:hover .image-wrapper img {
+  transform: scale(1.05);
+}
+
     .menu-info {
       padding: 15px;
     }
@@ -222,6 +268,91 @@ body::before {
       background: #2a2a2a;
       color: #aaa;
     }
+   /* Modal background with image and dark overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('popup-background.png') center center / cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Modal box */
+.modal-content {
+  background: linear-gradient(
+    135deg,
+    rgba(246, 239, 219, 0.9),   /* #ffc107 with opacity */
+    rgba(245, 204, 150, 0.9)   /* #f49f2f with opacity */
+  );
+  color: #000;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  position: relative;
+}
+.modal-content p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 10px;
+  color: #333;
+}
+
+
+.modal-logo {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+/* Handi Biryani heading with Makulath font */
+.modal-title {
+  font-family: 'Makulath', cursive;
+  font-size: 36px;
+  background: linear-gradient(45deg, #ffc107, #f49f2f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  background-color: #ffc107;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-actions button:hover {
+  background-color: #e0a800;
+}
+
+
   </style>
 </head>
 <body>
@@ -236,7 +367,8 @@ body::before {
       <button class="search-toggle" onclick="toggleSearch()">🔍</button>
     </div>
   </header>
-<nav id="categoryNav" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding: 20px; background-color: #525967;">
+<nav id="categoryNav" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding: 20px;">
+
   <!-- Buttons will be injected here -->
 </nav>
 
@@ -283,7 +415,9 @@ body::before {
       <div class="grid">
         ${grouped[category].map(item => `
           <div class="menu-item">
+             <div class="image-wrapper">
             <img src="${item.image_url}" alt="${item.name}" />
+             <div class="image-overlay"></div> </div>
             <div class="menu-info">
               <h3>${item.name}</h3>
               ${
@@ -353,8 +487,50 @@ function scrollToSection(categoryId) {
     });
   });
 </script>
+<script>
+  window.addEventListener("load", function () {
+    const modal = document.getElementById("phoneModal");
+    modal.style.display = "flex";
+  });
+
+  function submitPhone() {
+    const phone = document.getElementById("phoneInput").value.trim();
+    const modal = document.getElementById("phoneModal");
+    modal.style.display = "none";
+
+    // OPTIONAL: Send to backend
+    if (phone !== "") {
+      console.log("Phone entered:", phone);
+      // Replace below with your actual database logic
+      // Example:
+      /*
+      fetch('https://your-api.com/save-phone', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone })
+      }).then(res => res.json())
+        .then(data => console.log('Saved:', data));
+      */
+    }
+  }
+</script>
+
+
 
   <button id="scrollTopBtn" title="Go to top">↑</button>
+<!-- Phone Number Modal -->
+<div id="phoneModal" class="modal-overlay">
+  <div class="modal-content">
+    <img src="logo.png" alt="Logo" class="modal-logo" />
+    <div class="modal-title">Handi Biryani</div>
+    <p>Enter your phone number (optional)</p>
+    <input type="tel" id="phoneInput" placeholder="Enter phone number" />
+    <div class="modal-actions">
+      <button onclick="submitPhone()">Continue</button>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>
