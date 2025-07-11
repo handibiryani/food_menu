@@ -9,7 +9,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap" rel="stylesheet">
+
 <link href="https://fonts.googleapis.com/css2?family=Libertinus+Mono&family=Manufacturing+Consent&display=swap" rel="stylesheet">
+  <!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js"></script>
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js"></script>
+
   <style>
     @font-face {
   font-family: 'Makulath';
@@ -598,31 +604,8 @@ function scrollToSection(categoryId) {
   });
 </script>
 <script>
-  window.addEventListener("load", function () {
-    const modal = document.getElementById("phoneModal");
-    modal.style.display = "flex";
-  });
+  
 
-  function submitPhone() {
-    const phone = document.getElementById("phoneInput").value.trim();
-    const modal = document.getElementById("phoneModal");
-    modal.style.display = "none";
-
-    // OPTIONAL: Send to backend
-    if (phone !== "") {
-      console.log("Phone entered:", phone);
-      // Replace below with your actual database logic
-      // Example:
-      /*
-      fetch('https://your-api.com/save-phone', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone })
-      }).then(res => res.json())
-        .then(data => console.log('Saved:', data));
-      */
-    }
-  }
 </script>
 
 
@@ -640,6 +623,53 @@ function scrollToSection(categoryId) {
     </div>
   </div>
 </div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAICvR2d7-Ru6-1wTZI4YjyLqaK0OiTx3I",
+    authDomain: "handi-biryani-food-menu.firebaseapp.com",
+    projectId: "handi-biryani-food-menu",
+    storageBucket: "handi-biryani-food-menu.appspot.com",
+    messagingSenderId: "727061480388",
+    appId: "1:727061480388:web:7d6cba3602cdedf84bda91",
+    measurementId: "G-BEBQJ732EH"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // ✅ Attach to window so HTML button can access it
+  window.submitPhone = async function () {
+    const phone = document.getElementById("phoneInput").value.trim();
+    const modal = document.getElementById("phoneModal");
+
+    if (phone === "") {
+      modal.style.display = "none";
+      return;
+    }
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "phone_numbers"), {
+        number: phone,
+        timestamp: serverTimestamp()
+      });
+      console.log("Phone number saved to Firestore");
+      modal.style.display = "none";
+    } catch (error) {
+      console.error("Error saving phone number:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  };
+</script>
 
 
 </body>
