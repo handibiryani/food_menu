@@ -938,7 +938,7 @@ const foodItems = [
     "name": "Buttermilk",
     "category": "Desserts",
     "price": 25,
-    "image_url": "https://m.media-amazon.com/images/I/81j62n0fr-L.jpg"
+    "image_url": "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/buttermilk.webp?updatedAt=1727162114085"
   },
   {
     "id": 131.1,
@@ -952,28 +952,28 @@ const foodItems = [
     "name": "Egg Thali",
     "category": "Thali",
     "price": 100,
-    "image_url": "https://lh3.googleusercontent.com/geofoodgmb/AC9zUhN9AhKAQeJGxwKFzuy-PoHThaCBg21SgkCU7KfJRedpzOQgzybh61S62PZZ-edxLl9ZIFyTREjvwZ4Ll5WRw2UkwQ=s680-w680-h510-rw"
+    "image_url": "https://lh3.googleusercontent.com/geofoodgmb/AC9zUhNXkBqlh0A4ZzChtKXLoK25kovt6JynRN1WUCjQVQrkJ8XgXg7xpeSp9eEGbt1VUy07b182tDslf7z4BJ_j1rhPcw=s680-w680-h510-rw"
   },
   {
     "id": 133,
     "name": "Chicken Thali",
     "category": "Thali",
     "price": 130,
-    "image_url": "https://lh3.googleusercontent.com/geofoodgmb/AC9zUhNhqFUcflgW0J4gwIs6heEbOWdVBDaeFCFqDmowUhtMTPYVLaWzxyM-5akNI7A2APOn2yLub7hN2_P3IjPlNN7lVA=s680-w680-h510-rw"
+    "image_url": "https://lh3.googleusercontent.com/geofoodgmb/AC9zUhOStd_je7x7XE-ejWWgaKwQYALi54TiECnHIi-TxmIgTG4-a4iq6DhtfH_a6R48Mg6x7kySkJeZzkZ1XD_hmOY43Q=s680-w680-h510-rw"
   },
   {
     "id": 134,
     "name": "Paneer Thali",
     "category": "Thali",
     "price": 130,
-    "image_url": "https://lh3.googleusercontent.com/geofoodgmb/AC9zUhMHFWZAVHwSyRr4yjLj_VIfLsFDK7R38GN0HGc38k1aMx82caprtbnJffrEaAwkny090_IDp5j-bL8jq8m4r8WUFw=s680-w680-h510-rw"
+    "image_url": "https://lh3.googleusercontent.com/geofoodgmb/AC9zUhNaNA3abfqcWv5Er0xZN-AJiLLCbpeyUthJsCzNWDk3JZ3Uue1bgqOSTiz0CRyR4PST9Pd0M-IGefDwD5ETu0srAg=s680-w680-h510-rw"
   },
   {
     "id": 135,
     "name": "Veg Thali",
     "category": "Thali",
     "price": 90,
-    "image_url": "https://lh3.googleusercontent.com/-x2RJTY1geD0/aG5WuhZkxxI/AAAAAAAAAX4/88eQVHBMvGY_UKpA45fR4w1Ep6yiyB7UQCLQBGAYYCw/s680-w680-h510-rw/2025-07-09.jpg"
+    "image_url": "https://lh3.googleusercontent.com/-UjIJrXA_kWw/aG-LS2fGigI/AAAAAAAAAYs/zXSgm7pj6fgAf2ZB-ZPJUf8U7uUbNG9GwCLQBGAYYCw/s680-w680-h510-rw/2025-07-10.jpg"
   },
   {
     "id": 136,
